@@ -56,6 +56,11 @@ return [
 
     'asset_url' => env('ASSET_URL', null),
 
+    'baidu_translate' =>[
+        'appId' => env('BAIDU_TRANSLATE_APPID'),
+        'key' => env('BAIDU_TRANSLATE_KEY')
+    ],
+
     /*
     |--------------------------------------------------------------------------
     | Application Timezone

@@ -23,8 +23,11 @@ class TopicsController extends Controller
 		return view('topics.index', compact('topics'));
 	}
 
-    public function show(Topic $topic)
+    public function show(Topic $topic,Request $request)
     {
+        if(!empty($topic->slug) && $topic->slug != $request->slug){
+            return redirect($topic->link(),301);
+        }
         return view('topics.show', compact('topic'));
     }
 
@@ -39,13 +42,14 @@ class TopicsController extends Controller
 	    $topic->fill($request->all());
 	    $topic->user_id = Auth::id();
 	    $topic->save();
-		return redirect()->route('topics.show', $topic->id)->with('success', '发布成功！');
+		return redirect()->to($topic->link())->with('success', '发布成功！');
 	}
 
 	public function edit(Topic $topic)
 	{
         $this->authorize('update', $topic);
-		return view('topics.create_and_edit', compact('topic'));
+        $categories = Category::all();
+		return view('topics.create_and_edit', compact('topic','categories'));
 	}
 
 	public function update(TopicRequest $request, Topic $topic)
@@ -53,7 +57,7 @@ class TopicsController extends Controller
 		$this->authorize('update', $topic);
 		$topic->update($request->all());
 
-		return redirect()->route('topics.show', $topic->id)->with('message', 'Updated successfully.');
+		return redirect()->to($topic->link())->with('success', '更新成功');
 	}
 
 	public function destroy(Topic $topic)
@@ -61,7 +65,7 @@ class TopicsController extends Controller
 		$this->authorize('destroy', $topic);
 		$topic->delete();
 
-		return redirect()->route('topics.index')->with('message', 'Deleted successfully.');
+		return redirect()->route('topics.index')->with('success', '删除成功！');
 	}
 
 	public function uploadImages(Request $request,ImageUploadHandler $handler)
