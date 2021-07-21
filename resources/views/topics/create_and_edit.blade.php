@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('styles')
+    <link href=" {{ asset('css/plugins/simditor-2.3.6/simditor.css') }}" rel="stylesheet">
+@endsection
+
 @section('content')
 
     <div class="container">
@@ -55,4 +59,29 @@
         </div>
     </div>
 
+@endsection
+
+@section('scripts')
+    <script type="text/javascript" src="{{ asset('js/plugins/simditor-2.3.6/module.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/plugins/simditor-2.3.6/hotkeys.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/plugins/simditor-2.3.6/uploader.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/plugins/simditor-2.3.6/simditor.min.js') }}"></script>
+
+    <script>
+        $(document).ready(function() {
+            var editor = new Simditor({
+                textarea: $('#editor'),
+                upload: {
+                    url: '{{ route('topics.upload_image') }}',
+                    params: {
+                        _token: '{{ csrf_token() }}'
+                    },
+                    fileKey: 'upload_file',
+                    connectionCount: 3,
+                    leaveConfirm: '文件上传中，关闭此页面将取消上传。'
+                },
+                pasteImage: true,
+            });
+        });
+    </script>
 @endsection

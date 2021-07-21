@@ -13,4 +13,7 @@ const mix = require('laravel-mix');
 
 mix.js('resources/js/app.js', 'public/js')
     .sass('resources/sass/app.scss', 'public/css')
-    .sourceMaps().version();
+    .sourceMaps()
+    .version()
+    .copyDirectory('resources/js/plugins','public/js/plugins')
+    .copyDirectory('resources/css/plugins','public/css/plugins');
