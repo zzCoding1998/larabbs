@@ -12,7 +12,9 @@ class TopicRequest extends Request
             case 'POST':
             {
                 return [
-                    // CREATE ROLES
+                    'title' => 'required|min:2',
+                    'body' => 'required|min:2',
+                    'category_id' => 'required|numeric'
                 ];
             }
             // UPDATE
@@ -35,7 +37,9 @@ class TopicRequest extends Request
     public function messages()
     {
         return [
-            // Validation messages
+            'title.min' => '标题不能少于2个字符',
+            'body.min' => '内容不能少于2个字符',
+            'category_id.numeric' => '分类必须为数字'
         ];
     }
 }
