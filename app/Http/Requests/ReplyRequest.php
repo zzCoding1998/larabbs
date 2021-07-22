@@ -12,7 +12,8 @@ class ReplyRequest extends Request
             case 'POST':
             {
                 return [
-                    // CREATE ROLES
+                    'topic_id' => 'required|exists:topics,id',
+                    'content' => 'required|max:200|min:2'
                 ];
             }
             // UPDATE
@@ -35,7 +36,10 @@ class ReplyRequest extends Request
     public function messages()
     {
         return [
-            // Validation messages
+            'content.max' => '回复内容长度不能超过200个字符',
+            'content.min' => '回复内容长度不能少于2个字符',
+            'content.required' => '回复内容不能为空',
+            'topic_id' => '非法数据，请刷新页面重试'
         ];
     }
 }
