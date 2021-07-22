@@ -32,7 +32,6 @@ class TopicObserver
     {
         if(!$topic->slug){
             dispatch(new TranslateSlug($topic));
-            $topic->slug = (new SlugTranslateHandler())->translate($topic->title);
         }
     }
 }
